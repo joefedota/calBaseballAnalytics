@@ -31,7 +31,12 @@ class Player(db.Model):
 class Position(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	position_name = db.Column(db.String(120), index=True)
+	num_players = db.Column(db.Integer)
 	players = db.relationship('Player', backref="position", lazy="dynamic")
+
+	def update_num_players(self):
+		self.num_players = Player.query.filter_by(position=self).count()
+		db.session.commit()
 
 	def __repr__(self):
 		return 'Position {}'.format(self.position_name)

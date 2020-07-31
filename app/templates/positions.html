@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block app_content %}
+<div class="page-header">
+  <h1>All Position Types <small>Subtext for header</small></h1>
+</div>
+
+<ul class="list-group">
+	{% for position in positions %}
+  <button type="button" class="list-group-item">
+    <span class="badge">{{ position.num_players }}</span>
+    {{ position.position_name }}
+  </button>
+  	{% endfor %}
+</ul>
+{% endblock %}
