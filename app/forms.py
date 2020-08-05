@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField, SelectField
 from wtforms.validators import DataRequired, Email, EqualTo
-from app.models import User
+from app.models import User, Player, Position
 
 class LoginForm(FlaskForm):
 	username = StringField('Username', validators=[DataRequired()])
@@ -25,3 +25,17 @@ class RegistrationForm(FlaskForm):
 		user = User.query.filter_by(email=email.data).first()
 		if user is not None:
 			raise ValidationError('Please use a different email address.')
+
+class PositionForm(FlaskForm):
+	position_name = StringField('Position Name', validators=[DataRequired()])
+	submit = SubmitField('Add Position')
+
+class PlayerForm(FlaskForm):
+	name = StringField('Player Name', validators=[DataRequired()])
+	number = IntegerField('Jersey Number', validators=[DataRequired()])
+	submit = SubmitField('Add Player')
+
+class PositionAdd(FlaskForm):
+	player = StringField('Player Name', validators=[DataRequired()])
+	position = StringField('Position', validators=[DataRequired()])
+	submit = SubmitField('Add Position to Player')

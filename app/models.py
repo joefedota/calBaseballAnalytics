@@ -18,24 +18,28 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return '<User {}>'.format(self.username)
 
+player_positions = db.Table('player_positions',
+    db.Column('player_id', db.Integer, db.ForeignKey('player.id'), primary_key=True),
+    db.Column('position_id', db.Integer, db.ForeignKey('position.id'), primary_key=True)
+)
+
 class Player(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(64), index=True)
 	number = db.Column(db.Integer, index=True)
-	position_id = db.Column(db.Integer, db.ForeignKey('position.id'))
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
+	positions = db.relationship('Position', secondary=player_positions, backref=db.backref('players', lazy='dynamic'))
 	def __repr__(self):
 		return 'Player {}'.format(self.name + " #" + str(self.number))
 
 class Position(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
-	position_name = db.Column(db.String(120), index=True)
+	position_name = db.Column(db.String(120), index=True, unique=True)
 	num_players = db.Column(db.Integer)
-	players = db.relationship('Player', backref="position", lazy="dynamic")
 
 	def update_num_players(self):
-		self.num_players = Player.query.filter_by(position=self).count()
+		self.num_players = Position.query.all().players.count()
 		db.session.commit()
 
 	def __repr__(self):

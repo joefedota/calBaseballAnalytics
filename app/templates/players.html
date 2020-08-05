@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.name.label }}<br>
+            {{ form.name(size=32) }}<br>
+            {% for error in form.name.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+        	{{ form.number.label }}<br>
+            {{ form.number(size=32) }}<br>
+            {% for error in form.number.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+</form>
+<form action="" method="post">
+        {{ form2.hidden_tag() }}
+        <p>
+            {{ form2.player.label }}<br>
+            {{ form2.player(size=32) }}<br>
+            {% for error in form2.player.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+        	{{ form2.position.label }}<br>
+            {{ form2.position(size=32) }}<br>
+            {% for error in form2.position.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form2.submit() }}</p>
+</form>
+<table class="table table-hover">
+  <thead>
+  	<tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Position</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for player in players %}
+  	<tr>
+  	  <td>{{ player.number }}</td>
+      <td>{{ player.name }}</td>
+      <td>{{ player.positions[0].position_name }}</td>
+  	</tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
