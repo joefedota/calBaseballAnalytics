@@ -1,6 +1,7 @@
 from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from sqlalchemy.dialects.postgresql import JSON
 
 #Entity diagram found at https://ondras.zarovi.cz/sql/demo/ load with keyword CalBaseballERD
 class User(UserMixin, db.Model):
