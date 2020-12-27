@@ -55,8 +55,10 @@
   {% for player in players %}
   	<tr>
   	  <td>{{ player.number }}</td>
-      <td>{{ player.name }}</td>
-      <td>{{ player.positions[0].position_name }}</td>
+	  <td>{{ player.name }}</td>
+	  {% if player.positions %}
+	  	<td>{{ player.positions[0].position_name }}</td>
+	  {% endif %}
   	</tr>
   {% endfor %}
   </tbody>
