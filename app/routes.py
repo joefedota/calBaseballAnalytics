@@ -43,6 +43,13 @@ def players():
 	players = Player.query.all()
 	return render_template("players.html", title="Players", players=players, form=form, form2=form2)
 
+@app.route('/player/<name>')
+@login_required
+def player(name):
+    player = Player.query.filter_by(name=name).first_or_404()
+
+    return render_template('player_detail.html', title='Player', player=player)
+
 @app.route('/login', methods=['GET','POST'])
 def login():
 	if current_user.is_authenticated:

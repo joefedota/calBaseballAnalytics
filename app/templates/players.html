@@ -53,9 +53,12 @@
   </thead>
   <tbody>
   {% for player in players %}
-  	<tr>
+  <tr>
   	  <td>{{ player.number }}</td>
-	  <td>{{ player.name }}</td>
+	  <td>
+		  <a href="{{ url_for('player', name=player.name) }}">{{ player.name }}</a>
+		</td>
+		
 	  {% if player.positions %}
 	  	<td>{{ player.positions[0].position_name }}</td>
 	  {% endif %}
